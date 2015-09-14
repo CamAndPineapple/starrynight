@@ -1,2 +1,73 @@
-p {
-  color: #009FC7; }
+/* --------------------------------------------
+Custom CSS for my Portfolio
+
+Author:		Camden Rudisill	
+License: 	MIT License (see LICENSE file)
+----------------------------------------------- */
+/* ------------------------
+   	GLOBALS
+--------------------------*/
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: 'Works Sans', sans-serif;
+  font-weight: 400; }
+  html a,
+  body a {
+    text-decoration: none; }
+    html a:hover,
+    body a:hover {
+      cursor: pointer; }
+
+/* Colors */
+/* Patterns */
+/* ------------------------
+    Main.html
+--------------------------*/
+.master-container {
+  height: 100vh;
+  background: url("../img/milk1.jpg");
+  background-size: cover;
+  background-position: bottom; }
+  .master-container p {
+    margin: 0;
+    color: #fff;
+    font-size: 37px;
+    letter-spacing: 2px; }
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 250px; }
+
+.search-form {
+  display: flex;
+  height: 36px; }
+
+.search-input {
+  width: 200px;
+  background-color: #ffffff;
+  font-size: 17px;
+  color: #B5A9A9; }
+
+.search-submit {
+  height: 36px;
+  width: 100px;
+  background-color: #2EBD59;
+  text-align: center;
+  line-height: 38px;
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 2px; }
+  .search-submit:hover {
+    background-color: #249446; }
+
+.test-container {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 500px;
+  height: 300px;
+  background-color: #fff; }
