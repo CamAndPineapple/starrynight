@@ -1,0 +1,18 @@
+
+/* ----------------------------------------
+   	testContainer - child of [SearchBar]	
+-------------------------------------------*/
+
+@import 'global.scss';
+
+.test-container {
+	height: 200px;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.68);
+	color: $blue;
+
+	h1 {
+		font-weight: 300;
+	}
+}
+

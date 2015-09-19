@@ -3,7 +3,7 @@ module.exports = {
 
 	entry: {
 		javascript: "./src/app/app.js",
-		html: "./src/index.html"
+		html: "./src/index.html",
 	},
 
 	output: {
@@ -20,7 +20,11 @@ module.exports = {
 			{
 				test: /\.html$/,
   				loader: "file?name=[name].[ext]",
-			}
+			},
+			{
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'sass']
+            }
 		],
 	},
 }

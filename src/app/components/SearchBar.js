@@ -1,21 +1,43 @@
 var React = require('react');
+var TestContainer = require('./testContainer');
+var styles = require(['./css/SearchBar.scss']);
 
 
 export default React.createClass({
- render: function() {
-		var containerStyle = {
-			marginTop: '578px',
-			backgroundColor: '#fff'
-		};
-		var searchbarStyle = {
-			height: '30px',
-			width: '400px',
+	getInitialState: function() {
+		return {
+			searchbarValue: "Enter your location",
+			newSearch: " "
+		}
+	},
+	clearSearch: function(e) {
+		this.setState({
+			searchbarValue: " "
+		});
+	},
+	handleInput: function(e) {
+		this.setState({
+			searchbarValue: e.target.value
+		});
+	},
+	performSearch: function(e) {
+		// api call 
 
-		};
+		e.preventDefault();
+		this.setState({
+			newSearch: this.state.searchbarValue
+		});
+	
+	},
+	render: function() {
 		return (
-			<div className="searchbar-container" style={containerStyle}>
-			<input className="searchbar" style={searchbarStyle} type="text" value="Find your location" />
-			<button type="submit">Search</button>
+			<div>
+				<TestContainer location={this.state.newSearch} />
+				<form className="searchbar-container"  onSubmit={this.performSearch}>
+					<input className="searchbar" type="text" 
+					value={this.state.searchbarValue} onClick={this.clearSearch} onChange={this.handleInput}  />
+					<button className="button--search" type="submit" >Search</button>
+				</form>
 			</div>
 		)
 	}

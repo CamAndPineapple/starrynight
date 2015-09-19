@@ -1,0 +1,29 @@
+
+/* ----------------------------------------
+   	Searchbar - Parent of [testContainer]	
+-------------------------------------------*/
+
+@import 'global.scss';
+
+.searchbar-container {
+	margin-top: 390px;
+}
+
+.searchbar {
+	height: 30px;
+	width: 300px;
+}
+
+.button--search {
+	height: 36px;
+	width: 140px;
+	color: #fff;
+	background-color: $orange;
+	border: none;
+
+	&:hover {
+		background-color: darken($orange, 10%);
+	}
+}
+		
+	

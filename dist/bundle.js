@@ -1,6 +1,34 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, callbacks = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId])
+/******/ 				callbacks.push.apply(callbacks, installedChunks[chunkId]);
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			modules[moduleId] = moreModules[moduleId];
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules);
+/******/ 		while(callbacks.length)
+/******/ 			callbacks.shift().call(null, __webpack_require__);
+
+/******/ 	};
+
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// "0" means "already loaded"
+/******/ 	// Array means "loading", array contains callbacks
+/******/ 	var installedChunks = {
+/******/ 		1:0
+/******/ 	};
 
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +54,29 @@
 /******/ 		return module.exports;
 /******/ 	}
 
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId, callback) {
+/******/ 		// "0" is the signal for "already loaded"
+/******/ 		if(installedChunks[chunkId] === 0)
+/******/ 			return callback.call(null, __webpack_require__);
+
+/******/ 		// an array means "currently loading".
+/******/ 		if(installedChunks[chunkId] !== undefined) {
+/******/ 			installedChunks[chunkId].push(callback);
+/******/ 		} else {
+/******/ 			// start chunk loading
+/******/ 			installedChunks[chunkId] = [callback];
+/******/ 			var head = document.getElementsByTagName('head')[0];
+/******/ 			var script = document.createElement('script');
+/******/ 			script.type = 'text/javascript';
+/******/ 			script.charset = 'utf-8';
+/******/ 			script.async = true;
+
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + ".bundle.js";
+/******/ 			head.appendChild(script);
+/******/ 		}
+/******/ 	};
 
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -44,50 +95,28 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	'use strict';
 
-	var _react = __webpack_require__(1);
+	var React = __webpack_require__(1);
+	var SearchBar = __webpack_require__(157);
 
-	var _react2 = _interopRequireDefault(_react);
+	var App = React.createClass({
+		displayName: 'App',
 
-	var _componentsSearchBar = __webpack_require__(157);
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(SearchBar, null)
+			);
+		}
+	});
 
-	var _componentsSearchBar2 = _interopRequireDefault(_componentsSearchBar);
+	React.render(React.createElement(App, null), document.getElementById('app'));
 
-	_react2["default"].render(_react2["default"].createElement(_componentsSearchBar2["default"], { name: "World" }), document.body);
-
-	// var React = require('react');
-	// var SearchBar = require('./SearchBar.jsx');
-
-	// var SearchBar = React.createClass({
-	// 	render: function() {
-	// 		var containerStyle = {
-	// 		display: 'flex',
-	// 		justifyContent: 'center',
-	// 		alignItems: 'center',
-	// 		backgroundColor: '#fff'
-	// 		}
-	// 		return (
-	// 			<div className="searchbar-container" style={containerStyle}>
-	// 			<input type="text" value="Find your location" />
-	// 			<button>Search</button>
-	// 			</div>
-	// 		)
-	// 	}
-	// });
-
-	// var App = React.createClass({
-	// 	render: function() {
-	// 		return (
-
-	// 			<h1><SearchBar /></h1>
-	// 		)
-	// 	}
-	// });
-
-	// React.render(<App />, document.getElementById('app'));
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "app.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
 /* 1 */
@@ -20469,37 +20498,108 @@
 /* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
 	});
 	var React = __webpack_require__(1);
+	var TestContainer = __webpack_require__(158);
+	var styles = __webpack_require__.e/* require */(3, function() {[__webpack_require__(163)];});
 
-	exports["default"] = React.createClass({
-	  displayName: "SearchBar",
+	exports['default'] = React.createClass({
+		displayName: 'SearchBar',
 
-	  render: function render() {
-	    return React.createElement(
-	      "div",
-	      { className: "greeting" },
-	      "Hello, ",
-	      this.props.name,
-	      "!"
-	    );
-	  }
+		getInitialState: function getInitialState() {
+			return {
+				searchbarValue: "Enter your location",
+				newSearch: " "
+			};
+		},
+		clearSearch: function clearSearch(e) {
+			this.setState({
+				searchbarValue: " "
+			});
+		},
+		handleInput: function handleInput(e) {
+			this.setState({
+				searchbarValue: e.target.value
+			});
+		},
+		performSearch: function performSearch(e) {
+			// api call
+
+			e.preventDefault();
+			this.setState({
+				newSearch: this.state.searchbarValue
+			});
+		},
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(TestContainer, { location: this.state.newSearch }),
+				React.createElement(
+					'form',
+					{ className: 'searchbar-container', onSubmit: this.performSearch },
+					React.createElement('input', { className: 'searchbar', type: 'text',
+						value: this.state.searchbarValue, onClick: this.clearSearch, onChange: this.handleInput }),
+					React.createElement(
+						'button',
+						{ className: 'button--search', type: 'submit' },
+						'Search'
+					)
+				)
+			);
+		}
 	});
+	module.exports = exports['default'];
 
-	// var SearchBar = React.createClass({
-	// 	render: function() {
-	// 		return (
-	// 			<div>
-	// 			<h1>Search</h1>
-	// 			</div>
-	// 		)
-	// 	}
-	// });
-	module.exports = exports["default"];
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "SearchBar.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 158 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	var React = __webpack_require__(1);
+	var styles = __webpack_require__.e/* require */(2, function() {[__webpack_require__(159)];});
+
+	exports['default'] = React.createClass({
+		displayName: 'testContainer',
+
+		render: function render() {
+			var spanStyle = {
+				color: '#fff'
+			};
+			return React.createElement(
+				'div',
+				{ className: 'test-container' },
+				React.createElement(
+					'h1',
+					null,
+					'Location: ',
+					React.createElement(
+						'span',
+						{ style: spanStyle },
+						this.props.location
+					),
+					' '
+				)
+			);
+		}
+	});
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "testContainer.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
