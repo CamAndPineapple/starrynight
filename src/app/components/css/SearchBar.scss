@@ -6,7 +6,7 @@
 @import 'global.scss';
 
 .searchbar-container {
-	margin-top: 390px;
+	margin-top: 260px;
 }
 
 .searchbar {
@@ -24,6 +24,18 @@
 	&:hover {
 		background-color: darken($orange, 10%);
 	}
+}
+
+.globe {
+    position: relative;
+    top: 8px;
+	color: #0056FF;
+    margin-left: 17px;
+    font-size: 34px;
+
+    &:hover {
+    	color: #fff;
+    }
 }
 		
 	

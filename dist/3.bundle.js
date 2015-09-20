@@ -318,7 +318,7 @@ webpackJsonp([3],{
 
 
 	// module
-	exports.push([module.id, "/* ----------------------------------------\n   \tSearchbar - Parent of [testContainer]\t\n-------------------------------------------*/\n/* ----------------------------------------\n   \tGlobals - included w/ all components\t\n-------------------------------------------*/\nbody {\n  font-family: 'Lato', sans-serif;\n  letter-spacing: 1px; }\n\n/* Colors */\n.searchbar-container {\n  margin-top: 390px; }\n\n.searchbar {\n  height: 30px;\n  width: 300px; }\n\n.button--search {\n  height: 36px;\n  width: 140px;\n  color: #fff;\n  background-color: #DCA33B;\n  border: none; }\n  .button--search:hover {\n    background-color: #c18923; }\n", ""]);
+	exports.push([module.id, "/* ----------------------------------------\n   \tSearchbar - Parent of [testContainer]\t\n-------------------------------------------*/\n/* ----------------------------------------\n   \tGlobals - included w/ all components\t\n-------------------------------------------*/\nbody {\n  font-family: 'Lato', sans-serif;\n  letter-spacing: 1px; }\n\n/* Colors */\n.searchbar-container {\n  margin-top: 390px; }\n\n.searchbar {\n  height: 30px;\n  width: 300px; }\n\n.button--search {\n  height: 36px;\n  width: 140px;\n  color: #fff;\n  background-color: #FF5722;\n  border: none; }\n  .button--search:hover {\n    background-color: #ee3900; }\n", ""]);
 
 	// exports
 

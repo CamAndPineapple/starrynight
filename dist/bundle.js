@@ -20549,6 +20549,7 @@
 					React.createElement(
 						'button',
 						{ className: 'button--search', type: 'submit' },
+						React.createElement('i', { 'class': 'fa fa-camera-retro' }),
 						'Search'
 					)
 				)
