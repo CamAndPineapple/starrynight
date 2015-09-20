@@ -20515,7 +20515,9 @@
 		getInitialState: function getInitialState() {
 			return {
 				searchbarValue: "Enter your location",
-				newSearch: " "
+				newSearch: " ",
+				latitude: " ",
+				longitude: " "
 			};
 		},
 		clearSearch: function clearSearch(e) {
@@ -20529,18 +20531,37 @@
 			});
 		},
 		performSearch: function performSearch(e) {
-			// api call
-
 			e.preventDefault();
 			this.setState({
 				newSearch: this.state.searchbarValue
 			});
 		},
+		clickGlobeForLocation: function clickGlobeForLocation() {
+			$.ajax({
+				type: "get",
+				url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
+				dataType: "jsonp",
+				success: function success(parsed_json) {
+					var latitude = parsed_json["location"]["lat"];
+					var longitude = parsed_json["location"]["lon"];
+					$.ajax({
+						type: "get",
+						url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/" + latitude + "," + longitude + ".json",
+						dataType: "jsonp",
+						success: function success(parsed_json) {
+							var successMessage = parsed_json["location"]["city"];
+							alert(successMessage);
+						}
+					});
+				}
+			});
+		},
+
 		render: function render() {
 			return React.createElement(
 				'div',
 				null,
-				React.createElement(TestContainer, { location: this.state.newSearch }),
+				React.createElement(TestContainer, { location: this.state.newSearch, latitude: this.state.latitude, longitude: this.state.longitude }),
 				React.createElement(
 					'form',
 					{ className: 'searchbar-container', onSubmit: this.performSearch },
@@ -20549,9 +20570,9 @@
 					React.createElement(
 						'button',
 						{ className: 'button--search', type: 'submit' },
-						React.createElement('i', { 'class': 'fa fa-camera-retro' }),
 						'Search'
-					)
+					),
+					React.createElement('span', { className: 'fa fa-globe globe', onClick: this.clickGlobeForLocation })
 				)
 			);
 		}
@@ -20581,6 +20602,7 @@
 			var spanStyle = {
 				color: '#fff'
 			};
+
 			return React.createElement(
 				'div',
 				{ className: 'test-container' },
@@ -20592,8 +20614,27 @@
 						'span',
 						{ style: spanStyle },
 						this.props.location
-					),
-					' '
+					)
+				),
+				React.createElement(
+					'h2',
+					null,
+					'latitude: ',
+					React.createElement(
+						'span',
+						{ style: spanStyle },
+						this.props.latitude
+					)
+				),
+				React.createElement(
+					'h2',
+					null,
+					'longitude: ',
+					React.createElement(
+						'span',
+						{ style: spanStyle },
+						this.props.longitude
+					)
 				)
 			);
 		}

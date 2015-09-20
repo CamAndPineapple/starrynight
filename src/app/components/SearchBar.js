@@ -28,21 +28,26 @@ export default React.createClass({
 			newSearch: this.state.searchbarValue
 		});
 	},
-	displayPosition: function(position) {
-
-		this.state.latitude = position.coords.latitude;
-		this.state.longitude = position.coords.longitude;
-
-		this.setState({
-			latitude: this.state.latitude,
-			longitude: this.state.longitude,
-		});
-	},
 	clickGlobeForLocation: function() {
-
-		navigator.geolocation.getCurrentPosition(this.displayPosition, this.displayError);
-
-	},
+		$.ajax({
+			type: "get",
+			url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
+			dataType: "jsonp",
+			success: function(parsed_json) {
+				var latitude = parsed_json["location"]["lat"];
+				var longitude = parsed_json["location"]["lon"];
+				$.ajax({
+					type: "get",
+					url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/" + latitude + "," + longitude + ".json",
+					dataType: "jsonp",
+						success: function(parsed_json) {
+							var successMessage = parsed_json["location"]["city"];
+							alert(successMessage);
+						}
+					});
+				}
+			});
+		},
 	
 	render: function() {
 		return (

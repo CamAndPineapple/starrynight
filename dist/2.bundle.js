@@ -35,7 +35,7 @@ webpackJsonp([2],{
 
 
 	// module
-	exports.push([module.id, "/* ----------------------------------------\n   \ttestContainer - child of [SearchBar]\t\n-------------------------------------------*/\n/* ----------------------------------------\n   \tGlobals - included w/ all components\t\n-------------------------------------------*/\nbody {\n  font-family: 'Lato', sans-serif;\n  letter-spacing: 1px; }\n\n/* Colors */\n.test-container {\n  height: 200px;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.68);\n  color: #00D8FF; }\n  .test-container h1 {\n    font-weight: 300; }\n", ""]);
+	exports.push([module.id, "/* ----------------------------------------\n   \ttestContainer - child of [SearchBar]\t\n-------------------------------------------*/\n/* ----------------------------------------\n   \tGlobals - included w/ all components\t\n-------------------------------------------*/\nbody {\n  font-family: 'Lato', sans-serif;\n  letter-spacing: 1px; }\n\n/* Colors */\n.test-container {\n  padding: 30px 0px 30px 30px;\n  margin-top: 40px;\n  height: 200px;\n  width: 95%;\n  background-color: rgba(0, 0, 0, 0.68);\n  color: #00D8FF; }\n  .test-container h1 {\n    font-weight: 300; }\n", ""]);
 
 	// exports
 
