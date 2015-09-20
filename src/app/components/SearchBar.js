@@ -8,8 +8,8 @@ export default React.createClass({
 		return {
 			searchbarValue: "Enter your location",
 			newSearch: " ",
-			latitude: " ",
-			longitude: " ",
+			city: " ",
+			state: " ",
 		}
 	},
 	clearSearch: function(e) {
@@ -28,7 +28,14 @@ export default React.createClass({
 			newSearch: this.state.searchbarValue
 		});
 	},
+	displayPosition: function() {
+	
+	
+		
+		
+	},
 	clickGlobeForLocation: function() {
+		var self = this;
 		$.ajax({
 			type: "get",
 			url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
@@ -40,19 +47,28 @@ export default React.createClass({
 					type: "get",
 					url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/" + latitude + "," + longitude + ".json",
 					dataType: "jsonp",
-						success: function(parsed_json) {
-							var successMessage = parsed_json["location"]["city"];
-							alert(successMessage);
-						}
-					});
-				}
-			});
-		},
+					success: function(parsed_json) {
+						self.state.city = parsed_json["location"]["city"];
+						self.state.state = parsed_json["location"]["state"];
+
+						self.setState({
+								city: self.state.city,
+								state: self.state.state,
+						});
+					}
+				});
+			}
+
+		});
+
+		
+
+	},
 	
 	render: function() {
 		return (
 			<div>
-				<TestContainer location={this.state.newSearch} latitude={this.state.latitude} longitude={this.state.longitude} />
+				<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state} />
 				<form className="searchbar-container"  onSubmit={this.performSearch}>
 					<input className="searchbar" type="text" 
 					value={this.state.searchbarValue} onClick={this.clearSearch} onChange={this.handleInput}  />
