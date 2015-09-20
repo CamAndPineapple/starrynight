@@ -10,6 +10,9 @@ export default React.createClass({
 			newSearch: " ",
 			city: " ",
 			state: " ",
+			illumination: " ",
+			moonPhase: " ", 
+			moonAge: " " 
 		}
 	},
 	clearSearch: function(e) {
@@ -18,7 +21,9 @@ export default React.createClass({
 		});
 	},
 	handleInput: function(e) {
-		this.setState({
+
+	
+	this.setState({
 			searchbarValue: e.target.value
 		});
 	},
@@ -27,12 +32,6 @@ export default React.createClass({
 		this.setState({
 			newSearch: this.state.searchbarValue
 		});
-	},
-	displayPosition: function() {
-	
-	
-		
-		
 	},
 	clickGlobeForLocation: function() {
 		var self = this;
@@ -45,15 +44,21 @@ export default React.createClass({
 				var longitude = parsed_json["location"]["lon"];
 				$.ajax({
 					type: "get",
-					url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/" + latitude + "," + longitude + ".json",
+					url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
 					dataType: "jsonp",
 					success: function(parsed_json) {
 						self.state.city = parsed_json["location"]["city"];
 						self.state.state = parsed_json["location"]["state"];
+						self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
+						self.state.moonPhase = parsed_json['moon_phase']['ageOfMoon'];
+						self.state.moonAge = parsed_json['moon_phase']['phaseofMoon'];
 
 						self.setState({
-								city: self.state.city,
+								city: self.state.city + ',',
 								state: self.state.state,
+								illumination: self.state.illumination,
+								moonPhase: self.state.moonPhase,
+								moonAge: self.state.moonAge
 						});
 					}
 				});
@@ -68,9 +73,9 @@ export default React.createClass({
 	render: function() {
 		return (
 			<div>
-				<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state} />
+				<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge}  />
 				<form className="searchbar-container"  onSubmit={this.performSearch}>
-					<input className="searchbar" type="text" 
+					<input className="searchbar"  id="searchTextField" type="text" 
 					value={this.state.searchbarValue} onClick={this.clearSearch} onChange={this.handleInput}  />
 					<button className="button--search" type="submit" >Search</button>
 					<span className="fa fa-globe globe" onClick={this.clickGlobeForLocation}></span>

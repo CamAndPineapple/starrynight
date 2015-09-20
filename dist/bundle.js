@@ -20516,8 +20516,11 @@
 			return {
 				searchbarValue: "Enter your location",
 				newSearch: " ",
-				latitude: " ",
-				longitude: " "
+				city: " ",
+				state: " ",
+				illumination: " ",
+				moonPhase: " ",
+				moonAge: " "
 			};
 		},
 		clearSearch: function clearSearch(e) {
@@ -20526,6 +20529,13 @@
 			});
 		},
 		handleInput: function handleInput(e) {
+
+			var input = this.searchbar;
+			alert(input);
+			var autocomplete = new google.maps.places.Autocomplete(input);
+
+			google.maps.event.addDomListener(window, 'load');
+
 			this.setState({
 				searchbarValue: e.target.value
 			});
@@ -20537,6 +20547,7 @@
 			});
 		},
 		clickGlobeForLocation: function clickGlobeForLocation() {
+			var self = this;
 			$.ajax({
 				type: "get",
 				url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
@@ -20546,14 +20557,26 @@
 					var longitude = parsed_json["location"]["lon"];
 					$.ajax({
 						type: "get",
-						url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/" + latitude + "," + longitude + ".json",
+						url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
 						dataType: "jsonp",
 						success: function success(parsed_json) {
-							var successMessage = parsed_json["location"]["city"];
-							alert(successMessage);
+							self.state.city = parsed_json["location"]["city"];
+							self.state.state = parsed_json["location"]["state"];
+							self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
+							self.state.moonPhase = parsed_json['moon_phase']['ageOfMoon'];
+							self.state.moonAge = parsed_json['moon_phase']['phaseofMoon'];
+
+							self.setState({
+								city: self.state.city + ',',
+								state: self.state.state,
+								illumination: self.state.illumination,
+								moonPhase: self.state.moonPhase,
+								moonAge: self.state.moonAge
+							});
 						}
 					});
 				}
+
 			});
 		},
 
@@ -20561,11 +20584,11 @@
 			return React.createElement(
 				'div',
 				null,
-				React.createElement(TestContainer, { location: this.state.newSearch, latitude: this.state.latitude, longitude: this.state.longitude }),
+				React.createElement(TestContainer, { location: this.state.newSearch, city: this.state.city, state: this.state.state, illumination: this.state.illumination, moonPhase: this.state.moonPhase, moonAge: this.state.moonAge }),
 				React.createElement(
 					'form',
 					{ className: 'searchbar-container', onSubmit: this.performSearch },
-					React.createElement('input', { className: 'searchbar', type: 'text',
+					React.createElement('input', { className: 'searchbar', id: 'searchTextField', type: 'text',
 						value: this.state.searchbarValue, onClick: this.clearSearch, onChange: this.handleInput }),
 					React.createElement(
 						'button',
@@ -20607,33 +20630,45 @@
 				'div',
 				{ className: 'test-container' },
 				React.createElement(
-					'h1',
+					'h2',
 					null,
-					'Location: ',
+					'city: ',
 					React.createElement(
 						'span',
 						{ style: spanStyle },
-						this.props.location
+						this.props.city,
+						' ',
+						this.props.state
 					)
 				),
 				React.createElement(
 					'h2',
 					null,
-					'latitude: ',
+					'Moon Illumination: ',
 					React.createElement(
 						'span',
 						{ style: spanStyle },
-						this.props.latitude
+						this.props.illumination
 					)
 				),
 				React.createElement(
 					'h2',
 					null,
-					'longitude: ',
+					'Moon Phase: ',
 					React.createElement(
 						'span',
 						{ style: spanStyle },
-						this.props.longitude
+						this.props.moonPhase
+					)
+				),
+				React.createElement(
+					'h2',
+					null,
+					'Moon Age: ',
+					React.createElement(
+						'span',
+						{ style: spanStyle },
+						this.props.moonAge
 					)
 				)
 			);

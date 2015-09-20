@@ -11,9 +11,10 @@ export default React.createClass({
 
 		return (
 			<div className="test-container">
-				<h1>Location: <span style={spanStyle}>{this.props.location}</span></h1>
-				<h2>city: <span style={spanStyle}>{this.props.city}</span></h2>
-				<h2>state: <span style={spanStyle}>{this.props.state}</span></h2>
+				<h2>city: <span style={spanStyle}>{this.props.city} {this.props.state}</span></h2>
+				<h2>Moon Illumination: <span style={spanStyle}>{this.props.illumination}</span></h2>
+				<h2>Moon Phase: <span style={spanStyle}>{this.props.moonPhase}</span></h2>
+				<h2>Moon Age: <span style={spanStyle}>{this.props.moonAge}</span></h2>
 			</div>
 		)
 	}
