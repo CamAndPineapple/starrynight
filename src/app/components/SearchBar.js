@@ -6,13 +6,13 @@ var styles = require(['./css/SearchBar.scss']);
 
 export default React.createClass({
 	arrayOfMoonPhaseImg: {
-		waxingCrescent: "src/img/waxing_crescent.png",
-		firstQuarter: "src/img/first_quarter.png",
-		waxingGibbous: "src/img/waxing_gibbous.png",
-		fullMoon: "src/img/full_moon.png",
-		waningGibbous: "src/img/waning_gibbous.png",
-		lastQuarter: "src/img/last_quarter.png",
-		waningCrescent: "src/img/waning_crescent.png"
+		WaxingCrescent: "src/img/waxing_crescent.png",
+		FirstQuarter: "src/img/first_quarter.png",
+		WaxingGibbous: "src/img/waxing_gibbous.png",
+		FullMoon: "src/img/full_moon.png",
+		WaningGibbous: "src/img/waning_gibbous.png",
+		LastQuarter: "src/img/last_quarter.png",
+		WaningCrescent: "src/img/waning_crescent.png"
 
 	},
 	getInitialState: function() {
@@ -54,20 +54,18 @@ export default React.createClass({
 				self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
 				self.state.moonPhase = parsed_json['moon_phase']['phaseofMoon'];
 				self.state.moonAge = parsed_json['moon_phase']['ageOfMoon'];
-				self.state.img = self.arrayOfMoonPhaseImg.firstQuarter;
-				self.state.img = self.arrayOfMoonPhaseImg.waxingCrescent;
-				self.state.img = self.arrayOfMoonPhaseImg.waxingGibbous;
-				self.state.img = self.arrayOfMoonPhaseImg.fullMoon;
-				self.state.img = self.arrayOfMoonPhaseImg.waningGibbous;
-				self.state.img = self.arrayOfMoonPhaseImg.lastQuarter;
-				self.state.img = self.arrayOfMoonPhaseImg.waningCrescent;
+				var moonPhaseClipped = self.state.moonPhase.split(' ').join('');
+				var moonPhaseImg = self.arrayOfMoonPhaseImg[moonPhaseClipped];
+		
+				
 
 				self.setState({
 						city: self.state.city + ',',
 						state: self.state.state,
 						illumination: self.state.illumination,
 						moonPhase: self.state.moonPhase,
-						moonAge: self.state.moonAge
+						moonAge: self.state.moonAge,
+						img: moonPhaseImg
 				});
 			}
 		});
@@ -99,20 +97,16 @@ export default React.createClass({
 						self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
 						self.state.moonPhase = parsed_json['moon_phase']['phaseofMoon'];
 						self.state.moonAge = parsed_json['moon_phase']['ageOfMoon'];
-						self.state.img = self.arrayOfMoonPhaseImg.firstQuarter;
-						self.state.img = self.arrayOfMoonPhaseImg.waxingCrescent;
-						self.state.img = self.arrayOfMoonPhaseImg.waxingGibbous;
-						self.state.img = self.arrayOfMoonPhaseImg.fullMoon;
-						self.state.img = self.arrayOfMoonPhaseImg.waningGibbous;
-						self.state.img = self.arrayOfMoonPhaseImg.lastQuarter;
-						self.state.img = self.arrayOfMoonPhaseImg.waningCrescent;
+						var moonPhaseClipped = self.state.moonPhase.split(' ').join('');
+						var moonPhaseImg = self.arrayOfMoonPhaseImg[moonPhaseClipped];
 
 						self.setState({
 								city: self.state.city + ',',
 								state: self.state.state,
 								illumination: self.state.illumination,
 								moonPhase: self.state.moonPhase,
-								moonAge: self.state.moonAge
+								moonAge: self.state.moonAge,
+								img: moonPhaseImg
 						});
 					}
 				});
