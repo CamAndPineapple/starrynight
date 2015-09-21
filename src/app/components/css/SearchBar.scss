@@ -5,8 +5,13 @@
 
 @import 'global.scss';
 
+.test-container-wrapper {
+	display: flex;
+}
+
 .searchbar-container {
 	margin-top: 260px;
+	text-align: center;
 }
 
 .searchbar {

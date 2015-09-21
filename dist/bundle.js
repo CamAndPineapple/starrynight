@@ -20507,7 +20507,8 @@
 	});
 	var React = __webpack_require__(1);
 	var TestContainer = __webpack_require__(158);
-	var styles = __webpack_require__.e/* require */(3, function() {[__webpack_require__(163)];});
+	var MoonPhaseContainer = __webpack_require__(163);
+	var styles = __webpack_require__.e/* require */(3, function() {[__webpack_require__(164)];});
 
 	exports['default'] = React.createClass({
 		displayName: 'SearchBar',
@@ -20515,7 +20516,7 @@
 		getInitialState: function getInitialState() {
 			return {
 				searchbarValue: "Enter your location",
-				newSearch: " ",
+				captureSearchEvent: " ",
 				city: " ",
 				state: " ",
 				illumination: " ",
@@ -20528,24 +20529,40 @@
 				searchbarValue: " "
 			});
 		},
-		handleInput: function handleInput(e) {
 
-			var input = this.searchbar;
-			alert(input);
-			var autocomplete = new google.maps.places.Autocomplete(input);
-
-			google.maps.event.addDomListener(window, 'load');
-
-			this.setState({
-				searchbarValue: e.target.value
-			});
-		},
-		performSearch: function performSearch(e) {
+		searchbarSearch: function searchbarSearch(e) {
+			var self = this;
 			e.preventDefault();
+			var inputValue = document.getElementById("searchTextField").value;
+			var city = inputValue.split(", ")[0];
+			var state = inputValue.split(", ")[1];
+
 			this.setState({
-				newSearch: this.state.searchbarValue
+				searchbarValue: inputValue
+			});
+
+			$.ajax({
+				type: "get",
+				url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
+				dataType: "jsonp",
+				success: function success(parsed_json) {
+					self.state.city = parsed_json["location"]["city"];
+					self.state.state = parsed_json["location"]["state"];
+					self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
+					self.state.moonPhase = parsed_json['moon_phase']['phaseofMoon'];
+					self.state.moonAge = parsed_json['moon_phase']['ageOfMoon'];
+
+					self.setState({
+						city: self.state.city + ',',
+						state: self.state.state,
+						illumination: self.state.illumination,
+						moonPhase: self.state.moonPhase,
+						moonAge: self.state.moonAge
+					});
+				}
 			});
 		},
+		searchbarAPICall: function searchbarAPICall() {},
 		clickGlobeForLocation: function clickGlobeForLocation() {
 			var self = this;
 			$.ajax({
@@ -20584,12 +20601,17 @@
 			return React.createElement(
 				'div',
 				null,
-				React.createElement(TestContainer, { location: this.state.newSearch, city: this.state.city, state: this.state.state, illumination: this.state.illumination, moonPhase: this.state.moonPhase, moonAge: this.state.moonAge }),
+				React.createElement(
+					'div',
+					{ className: 'test-container-wrapper' },
+					React.createElement(TestContainer, { location: this.state.newSearch, city: this.state.city, state: this.state.state, illumination: this.state.illumination, moonPhase: this.state.moonPhase, moonAge: this.state.moonAge }),
+					React.createElement(MoonPhaseContainer, null)
+				),
 				React.createElement(
 					'form',
-					{ className: 'searchbar-container', onSubmit: this.performSearch },
-					React.createElement('input', { className: 'searchbar', id: 'searchTextField', type: 'text',
-						value: this.state.searchbarValue, onClick: this.clearSearch, onChange: this.handleInput }),
+					{ className: 'searchbar-container', onSubmit: this.searchbarSearch, value: this.state.searchbarValue },
+					React.createElement('input', { className: 'searchbar', id: 'searchTextField', type: 'text', size: '3',
+						onClick: this.clearSearch }),
 					React.createElement(
 						'button',
 						{ className: 'button--search', type: 'submit' },
@@ -20628,48 +20650,57 @@
 
 			return React.createElement(
 				'div',
-				{ className: 'test-container' },
+				null,
 				React.createElement(
-					'h2',
-					null,
-					'city: ',
+					'div',
+					{ className: 'test-container' },
 					React.createElement(
-						'span',
-						{ style: spanStyle },
-						this.props.city,
-						' ',
-						this.props.state
+						'h2',
+						null,
+						'City: ',
+						React.createElement(
+							'span',
+							{ style: spanStyle },
+							this.props.city,
+							' ',
+							this.props.state
+						)
+					),
+					React.createElement(
+						'h2',
+						null,
+						'Moon Illumination: ',
+						React.createElement(
+							'span',
+							{ style: spanStyle },
+							this.props.illumination
+						)
+					),
+					React.createElement(
+						'h2',
+						null,
+						'Moon Phase: ',
+						React.createElement(
+							'span',
+							{ style: spanStyle },
+							this.props.moonPhase
+						)
+					),
+					React.createElement(
+						'h2',
+						null,
+						'Moon Age: ',
+						React.createElement(
+							'span',
+							{ style: spanStyle },
+							this.props.moonAge
+						)
 					)
 				),
 				React.createElement(
-					'h2',
-					null,
-					'Moon Illumination: ',
-					React.createElement(
-						'span',
-						{ style: spanStyle },
-						this.props.illumination
-					)
-				),
-				React.createElement(
-					'h2',
-					null,
-					'Moon Phase: ',
-					React.createElement(
-						'span',
-						{ style: spanStyle },
-						this.props.moonPhase
-					)
-				),
-				React.createElement(
-					'h2',
-					null,
-					'Moon Age: ',
-					React.createElement(
-						'span',
-						{ style: spanStyle },
-						this.props.moonAge
-					)
+					'div',
+					{ className: 'moonphase-container' },
+					React.createElement('img', { className: 'moonphase-img' })
 				)
 			);
 		}
@@ -20677,6 +20708,39 @@
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "testContainer.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	var React = __webpack_require__(1);
+	var styles = !/* require */(/* empty */[!(function webpackMissingModule() { var e = new Error("Cannot find module \"./css/MoonPhaseContainer.scss\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())]);
+
+	exports['default'] = React.createClass({
+		displayName: 'MoonPhaseContainer',
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				'hello'
+			);
+		}
+	});
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/MyDrive/GitHub/starrynight/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "MoonPhaseContainer.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
