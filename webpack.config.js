@@ -1,9 +1,9 @@
 module.exports = {
 
 	devtool: 'eval', 
-	
+
 	entry: {
-		javascript: "./src/app/app.js",
+		javascript: "./dist/app/app.js",
 		html: "./src/index.html",
 	},
 

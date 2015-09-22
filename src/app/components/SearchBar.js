@@ -6,13 +6,13 @@ var styles = require(['./css/SearchBar.scss']);
 
 export default React.createClass({
 	arrayOfMoonPhaseImg: {
-		WaxingCrescent: "dist/img/waxing_crescent.png",
-		FirstQuarter: "dist/img/first_quarter.png",
-		WaxingGibbous: "dist/img/waxing_gibbous.png",
-		FullMoon: "dist/img/full_moon.png",
-		WaningGibbous: "dist/img/waning_gibbous.png",
-		LastQuarter: "dist/img/last_quarter.png",
-		WaningCrescent: "dist/img/waning_crescent.png"
+		WaxingCrescent: "/img/waxing_crescent.png",
+		FirstQuarter: "/img/first_quarter.png",
+		WaxingGibbous: "/img/waxing_gibbous.png",
+		FullMoon: "/img/full_moon.png",
+		WaningGibbous: "/img/waning_gibbous.png",
+		LastQuarter: "/img/last_quarter.png",
+		WaningCrescent: "/img/waning_crescent.png"
 
 	},
 	getInitialState: function() {
