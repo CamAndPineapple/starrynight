@@ -24,7 +24,7 @@ export default React.createClass({
 			illumination: " ",
 			moonPhase: " ", 
 			moonAge: " ",
-			img: " " 
+			img: "/img/placeholder.jpg" 
 		}
 	},
 	clearSearch: function(e) {

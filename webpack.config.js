@@ -3,7 +3,7 @@ module.exports = {
 	devtool: 'eval', 
 
 	entry: {
-		javascript: "./dist/app/app.js",
+		javascript: "./src/app/app.js",
 		html: "./src/index.html",
 	},
 
