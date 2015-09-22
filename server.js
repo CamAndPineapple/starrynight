@@ -29,6 +29,6 @@ if (isDevelopment) {
     if (err) {
       console.log(err)
     }
-    console.log('Listening at localhost:3000');
+    console.log('Grab some coffee, localhost:3000 is up and running');
   });
 }
