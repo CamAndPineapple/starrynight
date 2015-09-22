@@ -46,7 +46,7 @@ export default React.createClass({
 	
 		$.ajax({
 			type: "get",
-			url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
+			url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
 				self.state.city = parsed_json["location"]["city"];
@@ -82,14 +82,14 @@ export default React.createClass({
 		var self = this;
 		$.ajax({
 			type: "get",
-			url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
+			url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
 				var latitude = parsed_json["location"]["lat"];
 				var longitude = parsed_json["location"]["lon"];
 				$.ajax({
 					type: "get",
-					url: "http://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
+					url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
 					dataType: "jsonp",
 					success: function(parsed_json) {
 						self.state.city = parsed_json["location"]["city"];
