@@ -1,6 +1,7 @@
 var React = require('react');
 var TestContainer = require('./testContainer');
 var MoonPhaseContainer = require('./MoonPhaseContainer');
+var TitleContainer = require('./TitleContainer');
 var styles = require(['./css/SearchBar.scss']);
 
 
@@ -17,6 +18,8 @@ export default React.createClass({
 	},
 	getInitialState: function() {
 		return {
+			showTestContainerWrapper: false,
+			showTitleContainer: true,
 			searchbarValue: "Enter your location",
 			captureSearchEvent: " ",
 			city: " ",
@@ -36,17 +39,20 @@ export default React.createClass({
 	searchbarSearch: function(e) {
 		var self = this;
 		e.preventDefault();
+		var API_KEY = "42e0777a5e56eeaf";
 		var inputValue = document.getElementById("searchTextField").value;
 		var city = inputValue.split(", ")[0];
 		var state = inputValue.split(", ")[1];
 		
 		this.setState({
-			searchbarValue: inputValue
+			searchbarValue: inputValue,
+			showTestContainerWrapper: true,
+			showTitleContainer: false
 		});
 	
 		$.ajax({
 			type: "get",
-			url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
+			url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
 				self.state.city = parsed_json["location"]["city"];
@@ -73,23 +79,19 @@ export default React.createClass({
 
 		
 	},
-	searchbarAPICall: function() {
-		
-
-
-	},
 	clickGlobeForLocation: function() {
+		var API_KEY = "42e0777a5e56eeaf";
 		var self = this;
 		$.ajax({
 			type: "get",
-			url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/q/autoip.json",
+			url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/q/autoip.json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
 				var latitude = parsed_json["location"]["lat"];
 				var longitude = parsed_json["location"]["lon"];
 				$.ajax({
 					type: "get",
-					url: "https://api.wunderground.com/api/42e0777a5e56eeaf/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
+					url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
 					dataType: "jsonp",
 					success: function(parsed_json) {
 						self.state.city = parsed_json["location"]["city"];
@@ -101,6 +103,8 @@ export default React.createClass({
 						var moonPhaseImg = self.arrayOfMoonPhaseImg[moonPhaseClipped];
 
 						self.setState({
+								showTestContainerWrapper: true,
+								showTitleContainer: false,
 								city: self.state.city + ',',
 								state: self.state.state,
 								illumination: self.state.illumination,
@@ -121,10 +125,11 @@ export default React.createClass({
 	render: function() {
 		return (
 			<div>
-					<div className="test-container-wrapper">
-					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge}  />
+					{this.state.showTitleContainer ? <TitleContainer /> : null }
+					{this.state.showTestContainerWrapper ? <div className="test-container-wrapper">
+					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge} /> 
 					<MoonPhaseContainer src={this.state.img} />
-					</div>
+					</div> : null }
 					<form className="searchbar-container" onSubmit={this.searchbarSearch} value={this.state.searchbarValue}>
 						<input className="searchbar"  id="searchTextField" type="text" size="3"
 						 onClick={this.clearSearch} />

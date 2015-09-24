@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([5],{
 
 /***/ 161:
 /***/ function(module, exports) {
@@ -283,13 +283,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 164:
+/***/ 169:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(165);
+	var content = __webpack_require__(170);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(162)(content, {});
@@ -298,8 +298,8 @@ webpackJsonp([3],{
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./MoonPhaseContainer.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./MoonPhaseContainer.scss");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./SearchBar.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./SearchBar.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -310,7 +310,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 165:
+/***/ 170:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(161)();
@@ -318,7 +318,7 @@ webpackJsonp([3],{
 
 
 	// module
-	exports.push([module.id, ".moonphase-img-container {\n  padding: 30px 0px 30px 43px;\n  margin-top: 40px;\n  height: 200px;\n  width: 200px;\n  background-color: rgba(0, 0, 0, 0.68); }\n\n#moonphase-img {\n  height: 190px;\n  width: 120px;\n  border: 0;\n  outline: 0; }\n", ""]);
+	exports.push([module.id, "/* ----------------------------------------\n   \tSearchbar - Parent of [testContainer]\t\n-------------------------------------------*/\n/* ----------------------------------------\n   \tGlobals - included w/ all components\t\n-------------------------------------------*/\nbody {\n  font-family: 'Lato', sans-serif;\n  letter-spacing: 1px; }\n\n* {\n  outline: none; }\n\n/* Colors */\n.test-container-wrapper {\n  display: flex; }\n\n.searchbar-container {\n  text-align: center; }\n\n.searchbar {\n  height: 30px;\n  width: 300px; }\n\n.button--search {\n  height: 36px;\n  width: 140px;\n  color: #fff;\n  background-color: #FF5722;\n  border: none; }\n  .button--search:hover {\n    background-color: #ee3900; }\n\n.globe {\n  position: relative;\n  top: 8px;\n  color: #0056FF;\n  margin-left: 17px;\n  font-size: 34px; }\n  .globe:hover {\n    color: #fff; }\n\n.pac-container {\n  height: 90px; }\n", ""]);
 
 	// exports
 

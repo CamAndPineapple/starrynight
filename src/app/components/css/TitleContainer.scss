@@ -1,0 +1,22 @@
+
+/* ----------------------------------------
+	TitleContainer - child of [SearchBar]	
+-------------------------------------------*/
+
+@import 'global.scss';
+
+.title-container {
+	display: flex;
+	align-items: flex-end;
+	margin-top: 40px;
+    margin-bottom: 287px;
+	height: 260px;
+	text-align: center;
+	color: #fff;
+}
+
+h1 {
+	font-size: 80px;
+	letter-spacing: 30px;
+	font-weight: 300;
+}
