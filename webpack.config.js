@@ -1,26 +1,34 @@
-module.exports = {
+var Webpack = require('webpack');
+var path = require('path');
+var appPath = path.resolve(__dirname, 'app');
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var buildPath = path.resolve(__dirname, 'public', 'build');
 
-  devtool: 'eval', 
-
-  entry: {
-    javascript: "./src/app/app.js",
-  },
-
+var config = {
+  context: __dirname,
+  devtool: 'eval-source-map',
+  entry: [
+    'webpack-dev-server/client?http://localhost:3000', 
+    'webpack/hot/dev-server', 
+    path.resolve(appPath, 'main.js')],
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/dist"
+    path: buildPath,
+    filename: 'bundle.js',
+    publicPath: '/build/'
   },
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ["react-hot", "babel-loader"],
-      },
-      {
-                test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
-            }
-    ],
+    loaders: [{
+      test: /\.js$/,
+      loader: 'babel',
+      exclude: [nodeModulesPath]
+    }, 
+    {
+          test: /\.scss$/,
+          loaders: ['style', 'css', 'sass']
+      }
+    ]
   },
-}
+  plugins: [new Webpack.HotModuleReplacementPlugin()]
+};
+
+module.exports = config;
