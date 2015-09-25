@@ -4,7 +4,6 @@ module.exports = {
 
   entry: {
     javascript: "./src/app/app.js",
-    html: "./src/index.html",
   },
 
   output: {
@@ -17,10 +16,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: ["react-hot", "babel-loader"],
-      },
-      {
-        test: /\.html$/,
-          loader: "file?name=[name].[ext]",
       },
       {
                 test: /\.scss$/,
