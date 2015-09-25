@@ -1,16 +1,20 @@
 
 
 .moonphase-img-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 317px;
 	padding: 30px 0px 30px 43px;
     margin-top: 40px;
-    height: 200px;
+    height: 250px;
     width: 200px;
 	background-color: rgba(0, 0, 0, 0.68);
 }
 
 #moonphase-img {
 	height: 190px;
-	width: 120px;
+	width: 145px;
 	border: 0;
 	outline: 0;
 }

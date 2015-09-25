@@ -2,8 +2,8 @@ var React = require('react');
 var TestContainer = require('./testContainer');
 var MoonPhaseContainer = require('./MoonPhaseContainer');
 var TitleContainer = require('./TitleContainer');
+var ForecastMessageContainer = require('./ForecastMessageContainer');
 var styles = require(['./css/SearchBar.scss']);
-
 
 export default React.createClass({
 	arrayOfMoonPhaseImg: {
@@ -14,7 +14,13 @@ export default React.createClass({
 		WaningGibbous: "/img/waning_gibbous.png",
 		LastQuarter: "/img/last_quarter.png",
 		WaningCrescent: "/img/waning_crescent.png"
-
+	},
+	arrayOfForecastMessages: {
+		perfect: "perfect",
+		good: "good",
+		neutral: "neutral",
+		lousy: "lousy",
+		horrible: "horrible",
 	},
 	getInitialState: function() {
 		return {
@@ -27,12 +33,22 @@ export default React.createClass({
 			illumination: " ",
 			moonPhase: " ", 
 			moonAge: " ",
-			img: "/img/placeholder.jpg" 
+			clouds: " ",
+			img: "/img/placeholder.jpg",
+			forecastMessage: " "
 		}
 	},
+
 	clearSearch: function(e) {
 		this.setState({
-			searchbarValue: " "
+			searchbarValue: " ",
+			city: " ",
+			state: " ",
+			illumination: " ",
+			moonPhase: " ", 
+			moonAge: " ",
+			clouds: " ",
+			forecastMessage: " "
 		});
 	},
 
@@ -40,39 +56,63 @@ export default React.createClass({
 		var self = this;
 		e.preventDefault();
 		var API_KEY = "42e0777a5e56eeaf";
+		var API_KEY_OW = "2f5202c6eb5858cc1157b47fc8aecbae";
 		var inputValue = document.getElementById("searchTextField").value;
 		var city = inputValue.split(", ")[0];
 		var state = inputValue.split(", ")[1];
 		
-		this.setState({
-			searchbarValue: inputValue,
-			showTestContainerWrapper: true,
-			showTitleContainer: false
-		});
-	
 		$.ajax({
 			type: "get",
 			url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
-				self.state.city = parsed_json["location"]["city"];
-				self.state.state = parsed_json["location"]["state"];
-				self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
-				self.state.moonPhase = parsed_json['moon_phase']['phaseofMoon'];
-				self.state.moonAge = parsed_json['moon_phase']['ageOfMoon'];
-				var moonPhaseClipped = self.state.moonPhase.split(' ').join('');
-				var moonPhaseImg = self.arrayOfMoonPhaseImg[moonPhaseClipped];
+
+				var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
+				var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
+				var moonPhaseClipped = moonPhaseVar.split(' ').join('');
+				var illuminationPercentage = parsed_json['moon_phase']['percentIlluminated'];
 		
+				self.setState({
+						searchbarValue: inputValue,
+						showTestContainerWrapper: true,
+						showTitleContainer: false,
+						city: parsed_json["location"]["city"] + ',',
+						state: parsed_json["location"]["state"],
+						illumination: parsed_json['moon_phase']['percentIlluminated'],
+						moonPhase: parsed_json['moon_phase']['phaseofMoon'],
+						moonAge: parsed_json['moon_phase']['ageOfMoon'],
+						img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
+				});
+			}
+		});
+		$.ajax({
+			type: "get",
+			url: 'http://api.openweathermap.org/data/2.5/forecast/' + city + '?id=524901&APPID=1111111111',
+			success: function(parsed_json) {
+
+				var cloudPercentage = parsed_json['list'][0]['clouds']['all'];
+				var message;
+
 				
 
+				if (cloudPercentage >= 80) {
+					message = self.arrayOfForecastMessages["horrible"];
+				} else if (cloudPercentage >= 60) {
+					message = self.arrayOfForecastMessages["lousy"];
+				} else if (cloudPercentage >= 40) {
+					message = self.arrayOfForecastMessages["neutral"];
+				} else if (cloudPercentage >= 10) {
+					message = self.arrayOfForecastMessages["good"];
+				} else if (cloudPercentage >= 0) {
+					message = self.arrayOfForecastMessages["perfect"];
+				} 
+
 				self.setState({
-						city: self.state.city + ',',
-						state: self.state.state,
-						illumination: self.state.illumination,
-						moonPhase: self.state.moonPhase,
-						moonAge: self.state.moonAge,
-						img: moonPhaseImg
+						clouds: cloudPercentage,
+						forecastMessage: message
 				});
+
+				
 			}
 		});
 
@@ -94,24 +134,22 @@ export default React.createClass({
 					url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
 					dataType: "jsonp",
 					success: function(parsed_json) {
-						self.state.city = parsed_json["location"]["city"];
-						self.state.state = parsed_json["location"]["state"];
-						self.state.illumination = parsed_json['moon_phase']['percentIlluminated'];
-						self.state.moonPhase = parsed_json['moon_phase']['phaseofMoon'];
-						self.state.moonAge = parsed_json['moon_phase']['ageOfMoon'];
-						var moonPhaseClipped = self.state.moonPhase.split(' ').join('');
-						var moonPhaseImg = self.arrayOfMoonPhaseImg[moonPhaseClipped];
 
-						self.setState({
-								showTestContainerWrapper: true,
-								showTitleContainer: false,
-								city: self.state.city + ',',
-								state: self.state.state,
-								illumination: self.state.illumination,
-								moonPhase: self.state.moonPhase,
-								moonAge: self.state.moonAge,
-								img: moonPhaseImg
-						});
+					var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
+					var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
+					var moonPhaseClipped = moonPhaseVar.split(' ').join('');
+		
+					self.setState({
+						searchbarValue: inputValue,
+						showTestContainerWrapper: true,
+						showTitleContainer: false,
+						city: parsed_json["location"]["city"] + ',',
+						state: parsed_json["location"]["state"],
+						illumination: parsed_json['moon_phase']['percentIlluminated'],
+						moonPhase: parsed_json['moon_phase']['phaseofMoon'],
+						moonAge: parsed_json['moon_phase']['ageOfMoon'],
+						img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
+					});
 					}
 				});
 			}
@@ -124,12 +162,15 @@ export default React.createClass({
 	
 	render: function() {
 		return (
-			<div>
+			<div>	
 					{this.state.showTitleContainer ? <TitleContainer /> : null }
+
 					{this.state.showTestContainerWrapper ? <div className="test-container-wrapper">
-					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge} /> 
+					<ForecastMessageContainer forecastMessage={this.state.forecastMessage} />
+					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge} clouds={this.state.clouds} /> 
 					<MoonPhaseContainer src={this.state.img} />
 					</div> : null }
+
 					<form className="searchbar-container" onSubmit={this.searchbarSearch} value={this.state.searchbarValue}>
 						<input className="searchbar"  id="searchTextField" type="text" size="3"
 						 onClick={this.clearSearch} />
