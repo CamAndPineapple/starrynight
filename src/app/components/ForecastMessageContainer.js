@@ -6,7 +6,7 @@ export default React.createClass({
 	render: function() {
 		var spanStyle = {
 			color: '#40C368',
-			fontWeight: bold
+			fontWeight: 'bold' 
 		};
 
 		return (
