@@ -56,7 +56,7 @@ export default React.createClass({
 		var self = this;
 		e.preventDefault();
 		var API_KEY = "42e0777a5e56eeaf";
-		var API_KEY_OW = "2f5202c6eb5858cc1157b47fc8aecbae";
+		var API_KEY_DS = "f";
 		var inputValue = document.getElementById("searchTextField").value;
 		var city = inputValue.split(", ")[0];
 		var state = inputValue.split(", ")[1];
@@ -121,42 +121,87 @@ export default React.createClass({
 	},
 	clickGlobeForLocation: function() {
 		var API_KEY = "42e0777a5e56eeaf";
+		var API_KEY_FIO = "e9a70b3c8567afd2b17b50b9699f6a24";
 		var self = this;
 		$.ajax({
 			type: "get",
 			url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/q/autoip.json",
 			dataType: "jsonp",
 			success: function(parsed_json) {
-				var latitude = parsed_json["location"]["lat"];
-				var longitude = parsed_json["location"]["lon"];
-				$.ajax({
-					type: "get",
-					url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
-					dataType: "jsonp",
-					success: function(parsed_json) {
+				var LATITUDE = parsed_json["location"]["lat"];
+				var LONGITUDE = parsed_json["location"]["lon"];
 
-					var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
-					var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
-					var moonPhaseClipped = moonPhaseVar.split(' ').join('');
-		
-					self.setState({
-						searchbarValue: inputValue,
-						showTestContainerWrapper: true,
-						showTitleContainer: false,
-						city: parsed_json["location"]["city"] + ',',
-						state: parsed_json["location"]["state"],
-						illumination: parsed_json['moon_phase']['percentIlluminated'],
-						moonPhase: parsed_json['moon_phase']['phaseofMoon'],
-						moonAge: parsed_json['moon_phase']['ageOfMoon'],
-						img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
-					});
-					}
+				$.when(
+
+					$.get("https://api.forecast.io/forecast/" + API_KEY_FIO + "/" + LATITUDE + "," + LONGITUDE, function(parsed_json) {
+						// get cloud cover which comes as a decimal between 0 and 1
+						var cloudCoverage = 100 * parsed_json["currently"]["cloudCover"];
+						alert(cloudCoverage);
+
+
+					}),
+
+
+					$.get("https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + LATITUDE + "," + LONGITUDE + ".json", function(parsed_json) {
+						var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
+						var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
+						var moonPhaseClipped = moonPhaseVar.split(' ').join('');
+						var illuminationPercentage = parsed_json['moon_phase']['percentIlluminated'];
+
+						self.setState({
+							searchbarValue: inputValue,
+							showTestContainerWrapper: true,
+							showTitleContainer: false,
+							city: parsed_json["location"]["city"] + ',',
+							state: parsed_json["location"]["state"],
+							illumination: parsed_json['moon_phase']['percentIlluminated'],
+							moonPhase: parsed_json['moon_phase']['phaseofMoon'],
+							moonAge: parsed_json['moon_phase']['ageOfMoon'],
+							img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
+						});
+					})
+
+
+				).then(function() {
+					alert("finished!");
+
+
+
 				});
 			}
 
+
+
 		});
 
-		
+
+
+		// 	$.ajax({
+		// 		type: "get",
+		// 		url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
+		// 		dataType: "jsonp",
+		// 		success: function(parsed_json) {
+
+		// 		var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
+		// 		var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
+		// 		var moonPhaseClipped = moonPhaseVar.split(' ').join('');
+
+		// 		self.setState({
+		// 			searchbarValue: inputValue,
+		// 			showTestContainerWrapper: true,
+		// 			showTitleContainer: false,
+		// 			city: parsed_json["location"]["city"] + ',',
+		// 			state: parsed_json["location"]["state"],
+		// 			illumination: parsed_json['moon_phase']['percentIlluminated'],
+		// 			moonPhase: parsed_json['moon_phase']['phaseofMoon'],
+		// 			moonAge: parsed_json['moon_phase']['ageOfMoon'],
+		// 			img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
+		// 		});
+		// 		}
+		// 	});
+		// }
+
+
 
 	},
 	
