@@ -166,9 +166,6 @@ setTimeout(function(){
 			var weightedAvg = cloudWeighted + illumWeighted;
 			var msg;
 
-			console.log(cloudWeighted);
-			console.log(illumWeighted);
-
 
 			if (weightedAvg >= 4) {
 				msg = self.arrayOfForecastMessages["perfect"];
@@ -328,33 +325,6 @@ setTimeout(function(){
 },
 
 		
-
-
-
-		// 	$.ajax({
-		// 		type: "get",
-		// 		url: "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + latitude + "," + longitude + ".json",
-		// 		dataType: "jsonp",
-		// 		success: function(parsed_json) {
-
-		// 		var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
-		// 		var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
-		// 		var moonPhaseClipped = moonPhaseVar.split(' ').join('');
-
-		// 		self.setState({
-		// 			searchbarValue: inputValue,
-		// 			showTestContainerWrapper: true,
-		// 			showTitleContainer: false,
-		// 			city: parsed_json["location"]["city"] + ',',
-		// 			state: parsed_json["location"]["state"],
-		// 			illumination: parsed_json['moon_phase']['percentIlluminated'],
-		// 			moonPhase: parsed_json['moon_phase']['phaseofMoon'],
-		// 			moonAge: parsed_json['moon_phase']['ageOfMoon'],
-		// 			img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
-		// 		});
-		// 		}
-		// 	});
-		// }
 
 
 
