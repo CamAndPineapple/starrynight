@@ -201,6 +201,8 @@ setTimeout(function(){
 		var cloudWeighted;
 		var illumPercentage;
 		var illumWeighted;
+		var cloudWeight = 0.70;
+		var illumWeight = 0.30;
 		
 
 		$.ajax({
