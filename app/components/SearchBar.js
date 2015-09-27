@@ -10,7 +10,7 @@ export default React.createClass({
 		WaxingCrescent: "/img/waxing_crescent.png",
 		FirstQuarter: "/img/first_quarter.png",
 		WaxingGibbous: "/img/waxing_gibbous.png",
-		FullMoon: "/img/full_moon.png",
+		Full: "/img/full_moon.png",
 		WaningGibbous: "/img/waning_gibbous.png",
 		LastQuarter: "/img/last_quarter.png",
 		WaningCrescent: "/img/waning_crescent.png"
@@ -91,13 +91,13 @@ export default React.createClass({
 						// get cloud cover which comes as a decimal between 0 and 1
 						cloudPercentage = 100 * parsed_json["currently"]["cloudCover"];
 
-						if (cloudPercentage >= 80) {
+						if (cloudPercentage >= 60) {
 							cloudWeighted = 1 * cloudWeight;
-						} else if (cloudPercentage >= 60) {
-							cloudWeighted = 2 * cloudWeight;
 						} else if (cloudPercentage >= 40) {
+							cloudWeighted = 2 * cloudWeight;
+						} else if (cloudPercentage >= 30) {
 							cloudWeighted = 3 * cloudWeight;
-						} else if (cloudPercentage >= 10) {
+						} else if (cloudPercentage >= 20) {
 							cloudWeighted = 4 * cloudWeight;
 						} else if (cloudPercentage >= 0) {
 							cloudWeighted = 5 * cloudWeight;
@@ -146,7 +146,7 @@ export default React.createClass({
 							illumWeighted = 1 * illumWeight
 						} else if (illumPercentage >= 60) {
 							illumWeighted = 2 * illumWeight
-						} else if (illumPercentage >= 40) {
+						} else if (illumPercentage >= 20) {
 							illumWeighted = 3 * illumWeight
 						} else if (illumPercentage >= 10) {
 							illumWeighted = 4 * illumWeight
@@ -167,15 +167,15 @@ setTimeout(function(){
 			var msg;
 
 
-			if (weightedAvg >= 4) {
+			if (weightedAvg > 4) {
 				msg = self.arrayOfForecastMessages["perfect"];
-			} else if (weightedAvg >= 3) {
+			} else if (weightedAvg > 3) {
 				msg = self.arrayOfForecastMessages["good"];
-			} else if (weightedAvg >= 2) {
+			} else if (weightedAvg > 2) {
 				msg = self.arrayOfForecastMessages["neutral"];
-			} else if (weightedAvg >= 1) {
+			} else if (weightedAvg > 1) {
 				msg = self.arrayOfForecastMessages["lousy"];
-			} else if (weightedAvg >= 0) {
+			} else if (weightedAvg > 0) {
 				msg = self.arrayOfForecastMessages["horrible"];
 			}
 
@@ -258,6 +258,7 @@ setTimeout(function(){
 						var moonPhaseVar = parsed_json['moon_phase']['phaseofMoon'];
 						var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
 						var moonPhaseClipped = moonPhaseVar.split(' ').join('');
+
 						
 						illumPercentage = parsed_json['moon_phase']['percentIlluminated'];
 
