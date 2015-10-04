@@ -1,4 +1,5 @@
-# Firesky React Web
+# FireSky
+## A React Web App
 
 This web app shows you the the star visibility forecast by weighing multiple factors,
 such as cloud coverage and moon illumination. It also shows the current moon phase.
