@@ -5,7 +5,7 @@ var http = require('http');
 var proxy = httpProxy.createProxyServer({
   changeOrigin: true,
   ws: true
-}); 
+});
 var app = express();
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
@@ -49,7 +49,7 @@ if (!isProduction) {
 
   server.listen(port, function () {
     console.log('Server running on port ' + port);
-  }); 
+  });
 
 } else {
 
@@ -59,6 +59,3 @@ if (!isProduction) {
   });
 
 }
-
-
-

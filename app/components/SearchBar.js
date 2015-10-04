@@ -31,26 +31,21 @@ export default React.createClass({
 			city: " ",
 			state: " ",
 			illumination: " ",
-			moonPhase: " ", 
+			moonPhase: " ",
 			moonAge: " ",
 			clouds: " ",
 			img: "/img/placeholder.jpg",
 			forecastMessage: " "
-		}
+		};
 	},
+
 
 	clearSearch: function(e) {
 		this.setState({
-			searchbarValue: " ",
-			city: " ",
-			state: " ",
-			illumination: " ",
-			moonPhase: " ", 
-			moonAge: " ",
-			clouds: " ",
-			forecastMessage: " "
+			searchbarValue: " "
+	
 		});
-		// "https://api.wunderground.com/api/" + API_KEY + "/geolookup/conditions/astronomy/forecast/q/" + state + "/" + city + ".json"
+		
 	},
 
 	searchbarSearch: function(e) {
@@ -68,7 +63,7 @@ export default React.createClass({
 
 		var city = inputValue.split(", ")[0];
 		var state = inputValue.split(", ")[1];
-		
+
 		this.setState({
 			searchbarValue: inputValue
 		});
@@ -143,15 +138,15 @@ export default React.createClass({
 
 
 						if (illumPercentage >= 80) {
-							illumWeighted = 1 * illumWeight
+							illumWeighted = 1 * illumWeight;
 						} else if (illumPercentage >= 60) {
-							illumWeighted = 2 * illumWeight
+							illumWeighted = 2 * illumWeight;
 						} else if (illumPercentage >= 20) {
-							illumWeighted = 3 * illumWeight
+							illumWeighted = 3 * illumWeight;
 						} else if (illumPercentage >= 10) {
-							illumWeighted = 4 * illumWeight
+							illumWeighted = 4 * illumWeight;
 						} else if (illumPercentage >= 0) {
-							illumWeighted = 5 * illumWeight
+							illumWeighted = 5 * illumWeight;
 						}
 
 
@@ -162,7 +157,7 @@ export default React.createClass({
 			}
 		});
 
-setTimeout(function(){ 
+setTimeout(function(){
 			var weightedAvg = cloudWeighted + illumWeighted;
 			var msg;
 
@@ -180,7 +175,7 @@ setTimeout(function(){
 			}
 
 			self.setState({
-			
+
 				forecastMessage: msg
 			});
 
@@ -200,7 +195,7 @@ setTimeout(function(){
 		var illumWeighted;
 		var cloudWeight = 0.70;
 		var illumWeight = 0.30;
-		
+
 
 		$.ajax({
 			type: "get",
@@ -216,7 +211,7 @@ setTimeout(function(){
 					dataType: "jsonp",
 					success: function(parsed_json) {
 
-						
+
 								// get cloud cover which comes as a decimal between 0 and 1
 								cloudPercentage = 100 * parsed_json["currently"]["cloudCover"];
 
@@ -239,12 +234,12 @@ setTimeout(function(){
 
 							}
 
-					
+
 
 
 						});
 
-				
+
 
 
 
@@ -259,7 +254,7 @@ setTimeout(function(){
 						var moonAgeVar = parsed_json['moon_phase']['ageOfMoon'];
 						var moonPhaseClipped = moonPhaseVar.split(' ').join('');
 
-						
+
 						illumPercentage = parsed_json['moon_phase']['percentIlluminated'];
 
 
@@ -274,28 +269,28 @@ setTimeout(function(){
 							moonAge: parsed_json['moon_phase']['ageOfMoon'],
 							img: self.arrayOfMoonPhaseImg[moonPhaseClipped]
 						});
-						
+
 
 						if (illumPercentage >= 80) {
-							illumWeighted = 1 * illumWeight
+							illumWeighted = 1 * illumWeight;
 						} else if (illumPercentage >= 60) {
-							illumWeighted = 2 * illumWeight
+							illumWeighted = 2 * illumWeight;
 						} else if (illumPercentage >= 40) {
-							illumWeighted = 3 * illumWeight
+							illumWeighted = 3 * illumWeight;
 						} else if (illumPercentage >= 10) {
-							illumWeighted = 4 * illumWeight
+							illumWeighted = 4 * illumWeight;
 						} else if (illumPercentage >= 0) {
-							illumWeighted = 5 * illumWeight
+							illumWeighted = 5 * illumWeight;
 						}
 
-						
+
 							}
 						});
 
-		
-}})
 
-setTimeout(function(){ 
+}});
+
+setTimeout(function(){
 			var weightedAvg = cloudWeighted + illumWeighted;
 			var msg;
 
@@ -314,7 +309,7 @@ setTimeout(function(){
 			}
 
 			self.setState({
-			
+
 				forecastMessage: msg
 			});
 
@@ -325,20 +320,20 @@ setTimeout(function(){
 
 },
 
-		
 
 
 
 
-	
+
+
 	render: function() {
 		return (
-			<div>	
+			<div>
 					{this.state.showTitleContainer ? <TitleContainer /> : null }
 
 					{this.state.showTestContainerWrapper ? <div className="test-container-wrapper">
 					<ForecastMessageContainer forecastMessage={this.state.forecastMessage} />
-					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge} clouds={this.state.clouds} /> 
+					<TestContainer location={this.state.newSearch} city={this.state.city} state={this.state.state}  illumination={this.state.illumination} moonPhase={this.state.moonPhase} moonAge={this.state.moonAge} clouds={this.state.clouds} />
 					<MoonPhaseContainer src={this.state.img} />
 					</div> : null }
 

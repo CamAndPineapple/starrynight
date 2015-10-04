@@ -1,7 +1,10 @@
-# webpack-express-boilerplate
-A boilerplate for running a Webpack workflow in Node express
+# Firesky React Web
 
-Please read the following article: [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) to know more about this boilerplate.
+This web app shows you the the star visibility forecast by weighing multiple factors,
+such as cloud coverage and moon illumination. It also shows the current moon phase.
 
-## Running it on Nitrous Pro
-Change the `webpack.config.js` entry point: `webpack-dev-server/client?http://localhost:8080` to point to your test server, for example: `webpack-dev-server/client?http://test-103403.nitrousapp.com:3000`.  
+My cousin Mitchell Deaner and I built this over a period of 48 hours at the 
+[4th Annual Baltimore Hackathon](http://baltimorehackathon.com/). We had an absolute
+blast scrambling to learn new technologies and piece together this app.
+
+Test it out at: https://firesky.herokuapp.com/ 
